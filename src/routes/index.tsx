@@ -1,376 +1,659 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { ArrowUpRight, Plus } from "lucide-react";
+import { useRef } from "react";
+
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { Reveal, RevealText } from "@/components/Reveal";
+import { Magnetic } from "@/components/Magnetic";
+import { Parallax } from "@/components/Parallax";
+
+import hero1 from "@/assets/hero-1.jpg";
+import work1 from "@/assets/work-1.jpg";
+import work2 from "@/assets/work-2.jpg";
+import work3 from "@/assets/work-3.jpg";
+import work4 from "@/assets/work-4.jpg";
 
 export const Route = createFileRoute("/")({
-  component: BrandingPage,
+  component: Page,
 });
 
-const marqueeText = [
-  "BRAND STRATEGY",
-  "BRAND MESSAGING",
-  "VISUAL IDENTITY",
-  "BRAND STRATEGY",
-  "BRAND MESSAGING",
-  "VISUAL IDENTITY",
-];
-
-const approachSteps = [
-  {
-    n: "1",
-    title: "We're Curious Creatures",
-    body: [
-      "This is where it starts. We lure you in… coffee in hand, defences slightly lowered, expecting a “quick chat.”",
-      "It’s not.",
-      "We start with questions. Lots of them.",
-      "We ask about the business story, who’s involved, where you want to grow, what’s working, and what’s quietly not. This isn’t just about design, it’s about understanding your whole business.",
-      "This part matters more than most people realise, and at Idyllic, it’s non-negotiable.",
-    ],
-  },
-  {
-    n: "2",
-    title: "Personality Before We Get Pretty",
-    body: [
-      "Time to pull out our unique card game to play, followed by a personality quiz we’ve built to uncover who your brand is.",
-      "You’ll find yourself answering instinctively, saying things you didn’t plan to say, and realising things you hadn’t quite put your finger on before.",
-      "We listen, all while our creative juices begin to bubble over…",
-    ],
-  },
-  {
-    n: "3",
-    title: "Let's Set the Mood",
-    body: [
-      "We’re not talking dimming the lights (though we can if you really want, we’ve even got a great Barry White EP we can play), but this is where we create a series of mood boards to map out the visual direction, get completely aligned, and explore the opportunities your brand can step into, from slightly outside your comfort zone to full “I carumba!” territory.",
-    ],
-  },
-  {
-    n: "4",
-    title: "Conceptual Design and Presentation",
-    body: [
-      "Because we’ve already set the direction, we’re not about to throw three half-baked options at you and secretly cross our fingers you pick our favourite.",
-      "We give you one concept. And we go all in.",
-      "We take the time to properly build it out, your personality, your presence, the way it all comes together, grounded in the strategy we’ve already locked in. Nothing random. Nothing accidental. (Even the bits that look effortless… aren’t.)",
-      "Every choice is deliberate. Designed for your audience, for impact, for that “ohhh now I get it” moment.",
-    ],
-  },
-  {
-    n: "5",
-    title: "Refine and Package",
-    body: [
-      "We fine-tune the final details with you (if there even are any), tighten the screws, and lock it in.",
-      "This isn’t just a logo slapped in a folder and sent on its way. This is a brand with bones. Structure. A pulse. A bible.",
-      "We package it all up into a clear, no-nonsense brand guideline, so your team, your printer, or some future designer doesn’t go rogue and butcher it.",
-    ],
-  },
-];
-
-const packages = [
-  {
-    title: "New Identity",
-    body: [
-      "Starting from scratch? Perfect. No baggage, no bad habits, just a wide open runway (and a lot riding on it to work).",
-      "This is the stage that sets the direction of everything that comes next.",
-      "We build it from the ground up — who you are, how you sound, how you show up, and how people remember you. Not just to look good, but to position you properly from day one.",
-    ],
-  },
-  {
-    title: "Rebrand",
-    body: [
-      "You’re not starting from scratch, and that’s exactly why calling in the experts matters more.",
-      "A rebrand isn’t a quick glow-up. It’s a careful, strategic shift. Done right, you bring your existing audience with you, sharpen your perception, and open the door to the customers you actually want next.",
-      "We take a thoughtful approach — understanding what to keep, what to evolve, and what needs to go.",
-    ],
-  },
-  {
-    title: "Brand Expansion",
-    body: [
-      "This is our most common package, because most businesses aren’t starting from scratch… they’re just having a bit of an identity crisis.",
-      "We step in and clean it up — realigning your voice, your visuals, and your presence. We dial up the personality, cut the confusion, and make sure everything works together instead of fighting for attention.",
-      "Same business. Just finally knowing exactly how to show up, and owning it.",
-    ],
-  },
-];
-
-const specialties = [
-  {
-    title: "Brand Strategy",
-    body: "This is where all those high school years of being labelled “nerd” finally start to pay off. We’re not just about what makes your brand look good — it’s about who it speaks to, how it positions you, and how it lines up with the words, tone, and reputation your business has built.",
-  },
-  {
-    title: "Brand Guidelines",
-    body: "We love breaking rules… but we love creating them even more. Giving you rules gives you confidence and direction on how the brand can show up across the board. They create boundaries, so you know exactly where to play, where to stretch, and how to be creative on purpose.",
-  },
-  {
-    title: "Visual Identity",
-    body: "A logo is just the tip of it. Your visual identity is everything around it — the colours, type, imagery, patterns, layouts, and all the little details that make your brand feel like you. It’s what makes people recognise you instantly, even without seeing your business name.",
-  },
-];
-
-const testimonials = [
-  {
-    quote:
-      "Idyllic helped me to bring my business dream to life. Their ability to translate my vision into something tangible was incredible. From helping us to create our company name, articulate our story, create our brand and design our website, the team really know their stuff!",
-    name: "Tracey Soffe",
-    company: "Trace Consulting",
-  },
-  {
-    quote:
-      "My website was created by the dream team at Idyllic and I’ve had nothing but positive reviews! Shay also INSISTED I get on Instagram which I wasn’t keen on… Now 80% of my new referrals come from Instagram! These guys understand the market and what works!",
-    name: "Olivia Brailsford",
-    company: "Olive Accounting",
-  },
-  {
-    quote:
-      "We have thoroughly enjoyed working and collaborating with Idyllic. The entire team is amazing and the quality of their work and the way that they go about their work speaks for itself. From the brand design to website build, Idyllic have allowed us to bring our vision to fruition.",
-    name: "Marama Nicholas",
-    company: "TVK Water Sports",
-  },
-];
-
-function BrandingPage() {
+function Page() {
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      {/* Nav */}
-      <header className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 md:px-10 py-6">
-        <a href="/" className="font-serif text-2xl md:text-3xl text-cream tracking-tight">
-          idyllic<span className="text-cream">.</span>
+    <>
+      <SmoothScroll />
+      <main className="relative bg-paper text-ink">
+        <Nav />
+        <Hero />
+        <Marquee />
+        <Manifesto />
+        <Work />
+        <Process />
+        <HorizontalShowcase />
+        <Services />
+        <Testimonials />
+        <CTA />
+        <Footer />
+      </main>
+    </>
+  );
+}
+
+/* ───────────────────────────── NAV ───────────────────────────── */
+
+function Nav() {
+  return (
+    <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+      <div className="flex items-center justify-between px-6 md:px-10 py-6 text-paper">
+        <a href="/" className="font-display text-2xl tracking-tight">
+          Idyll<span className="text-coral">.</span>
         </a>
-        <button aria-label="Menu" className="text-cream hover:opacity-80 transition">
-          <Menu className="w-8 h-8" strokeWidth={1.5} />
-        </button>
-      </header>
+        <nav className="hidden md:flex items-center gap-10 label">
+          <a href="#work" className="underline-anim">Work</a>
+          <a href="#process" className="underline-anim">Process</a>
+          <a href="#services" className="underline-anim">Services</a>
+          <a href="#contact" className="underline-anim">Contact</a>
+        </nav>
+        <Magnetic className="hidden md:block">
+          <a
+            href="#contact"
+            className="label inline-flex items-center gap-2 border border-paper/40 rounded-full px-4 py-2 hover:bg-paper hover:text-ink transition-colors duration-500 ease-cinema"
+          >
+            Start a project <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
+        </Magnetic>
+      </div>
+    </header>
+  );
+}
 
-      {/* Hero */}
-      <section className="relative pt-40 pb-32 md:pt-48 md:pb-40">
-        {/* Marquee strip */}
-        <div className="absolute top-28 md:top-36 left-0 right-0 bg-[color:var(--peach)] py-5 md:py-6 overflow-hidden border-y border-[color:var(--cream)]/20">
-          <div className="marquee gap-12 whitespace-nowrap">
-            {[...marqueeText, ...marqueeText].map((t, i) => (
-              <span
-                key={i}
-                className="font-serif text-3xl md:text-5xl tracking-tight text-[color:var(--coral)]"
-              >
-                {t} <span className="opacity-60 mx-6">—</span>
-              </span>
-            ))}
-          </div>
+/* ───────────────────────────── HERO ───────────────────────────── */
+
+function Hero() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  return (
+    <section
+      ref={ref}
+      className="relative h-[110svh] bg-ink text-paper overflow-hidden grain"
+    >
+      {/* Top label row */}
+      <motion.div
+        className="absolute top-28 left-6 right-6 md:left-10 md:right-10 flex items-start justify-between label text-paper/60 z-10"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <span>Est. MMXVI · Auckland</span>
+        <span className="hidden md:inline">Independent Studio</span>
+        <span className="text-right">N° 04 / Branding</span>
+      </motion.div>
+
+      {/* Headline */}
+      <motion.div
+        style={{ y, opacity }}
+        className="relative z-[2] h-full flex flex-col justify-end px-6 md:px-10 pb-24 md:pb-32"
+      >
+        <h1 className="font-display tracking-tight text-paper">
+          <span className="block text-[18vw] md:text-[15vw] leading-[0.85]">
+            <RevealText text="A studio" />
+          </span>
+          <span className="block text-[18vw] md:text-[15vw] leading-[0.85] italic text-coral">
+            <RevealText text="for the" delay={0.2} />
+          </span>
+          <span className="block text-[18vw] md:text-[15vw] leading-[0.85]">
+            <RevealText text="quietly bold." delay={0.4} />
+          </span>
+        </h1>
+      </motion.div>
+
+      {/* Floating image */}
+      <motion.div
+        initial={{ opacity: 0, scale: 1.05 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute right-6 md:right-16 top-[18%] w-[40vw] max-w-[360px] aspect-[4/5] overflow-hidden hidden sm:block"
+      >
+        <motion.img
+          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "20%"]) }}
+          src={hero1}
+          alt="Editorial portrait"
+          width={1280}
+          height={1600}
+          className="w-full h-full object-cover scale-110"
+        />
+      </motion.div>
+
+      {/* Scroll cue */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 label text-paper/60 flex flex-col items-center gap-3 z-10"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <span>Scroll</span>
+        <span className="block w-px h-10 bg-paper/40" />
+      </motion.div>
+    </section>
+  );
+}
+
+/* ─────────────────────────── MARQUEE ─────────────────────────── */
+
+function Marquee() {
+  const items = [
+    "Brand Strategy",
+    "Visual Identity",
+    "Editorial Design",
+    "Art Direction",
+    "Brand Messaging",
+    "Motion",
+  ];
+  const row = [...items, ...items];
+  return (
+    <section className="bg-coral text-ink py-6 md:py-8 overflow-hidden border-y border-ink/10">
+      <div className="marquee gap-12 whitespace-nowrap">
+        {row.map((t, i) => (
+          <span
+            key={i}
+            className="font-display italic text-4xl md:text-7xl tracking-tight"
+          >
+            {t} <span className="not-italic mx-6 opacity-50">✦</span>
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ───────────────────────── MANIFESTO ───────────────────────── */
+
+function Manifesto() {
+  return (
+    <section className="bg-paper text-ink py-32 md:py-56 px-6 md:px-10">
+      <div className="grid grid-cols-12 gap-6 md:gap-10 max-w-[1500px] mx-auto">
+        <div className="col-span-12 md:col-span-3">
+          <Reveal>
+            <p className="label text-ash">(Manifesto · 01)</p>
+          </Reveal>
         </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center mt-32 md:mt-40">
-          <h1 className="font-serif text-7xl md:text-[10rem] leading-none text-cream italic">
-            Branding
-          </h1>
-
-          <div className="mt-12 md:mt-16 space-y-7 text-base md:text-lg leading-relaxed text-cream/90 max-w-2xl mx-auto">
-            <p>Imagine having a brand that makes you pull out your business card with a cheeky little wink…</p>
-            <p>We’re talking about giving you full James Bond energy — cool, confident, and just a little bit dangerous.</p>
-            <p>
-              With our branding, you won’t just look good. You’ll sound right, feel consistent, and create an
-              experience people can’t help but be drawn into, leaving them asking where they can get one of your
-              branded cocktail shakers on their way out.
-            </p>
-            <p className="italic font-serif text-xl">Shaken, not stirred.</p>
-            <p>
-              But let’s get serious for a second — a well-defined brand has a direct impact on your revenue. A
-              strong brand builds loyalty, attracts <strong className="font-semibold">the right</strong> customers,
-              and gives you the confidence (and positioning) to charge what you’re actually worth.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Our Approach */}
-      <section className="bg-[color:var(--peach)] text-[color:var(--card-foreground)] py-24 md:py-32">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="font-serif italic text-5xl md:text-7xl text-[color:var(--coral)] text-center mb-20 md:mb-28">
-            Our Approach
+        <div className="col-span-12 md:col-span-9">
+          <h2 className="font-display text-[10vw] md:text-[7vw] leading-[0.95] tracking-tight">
+            <RevealText text="We don't make" />
+            <br />
+            <span className="italic text-coral">
+              <RevealText text="logos. We make" delay={0.1} />
+            </span>
+            <br />
+            <RevealText text="long love affairs." delay={0.2} />
           </h2>
 
-          <div className="space-y-24 md:space-y-32">
-            {approachSteps.map((step) => (
-              <div key={step.n} className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-16 items-start">
-                <div className="font-serif italic text-[8rem] md:text-[12rem] leading-none text-[color:var(--coral)]/40 select-none">
-                  {step.n}
-                </div>
-                <div>
-                  <h3 className="font-serif text-3xl md:text-5xl mb-6 text-[color:var(--coral)]">
-                    {step.title}
-                  </h3>
-                  <div className="space-y-4 text-base md:text-lg leading-relaxed">
-                    {step.body.map((p, i) => (
-                      <p key={i}>{p}</p>
-                    ))}
+          <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 max-w-4xl">
+            <Reveal delay={0.1}>
+              <p className="text-lg md:text-xl leading-relaxed text-ink/80">
+                Strategy, identity, and editorial direction for businesses ready
+                to stop hiding behind sameness. We build brands with bones —
+                structure, voice, a pulse — designed to outlast a trend cycle.
+              </p>
+            </Reveal>
+            <Reveal delay={0.25}>
+              <p className="text-lg md:text-xl leading-relaxed text-ink/80">
+                Every move is deliberate. Every layout earned. The bits that look
+                effortless took the longest. That&apos;s the part nobody sees,
+                and the part that does all the work.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────────── WORK ──────────────────────────── */
+
+const projects = [
+  { n: "01", title: "Maison Verre", tag: "Identity · Print", year: "2025", img: work1, span: "md:col-span-7 md:row-span-2", ratio: "aspect-[4/5]" },
+  { n: "02", title: "Carrenle", tag: "Packaging · Art Direction", year: "2025", img: work2, span: "md:col-span-5", ratio: "aspect-[4/5]" },
+  { n: "03", title: "Blasr Mill", tag: "Identity · Stationery", year: "2024", img: work3, span: "md:col-span-5", ratio: "aspect-[4/5]" },
+  { n: "04", title: "Atelier Rouge", tag: "Campaign · Editorial", year: "2024", img: work4, span: "md:col-span-12", ratio: "aspect-[16/9]" },
+];
+
+function Work() {
+  return (
+    <section id="work" className="bg-paper text-ink py-24 md:py-40 px-6 md:px-10">
+      <div className="max-w-[1500px] mx-auto">
+        <div className="flex items-end justify-between mb-16 md:mb-24">
+          <div>
+            <Reveal>
+              <p className="label text-ash mb-6">(Selected · 02)</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="font-display text-[14vw] md:text-[10vw] leading-[0.9] tracking-tight">
+                Work, <span className="italic text-coral">lately.</span>
+              </h2>
+            </Reveal>
+          </div>
+          <Reveal delay={0.2} className="hidden md:block">
+            <a href="#" className="label inline-flex items-center gap-2 underline-anim">
+              All projects (24) <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </Reveal>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+          {projects.map((p, i) => (
+            <Reveal
+              key={p.n}
+              delay={i * 0.08}
+              className={`group ${p.span ?? "md:col-span-6"}`}
+            >
+              <ProjectCard project={p} />
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+  return (
+    <a href="#" className="block group">
+      <div className={`relative overflow-hidden bg-muted ${project.ratio}`}>
+        <Parallax offset={40} className="absolute inset-0">
+          <img
+            src={project.img}
+            alt={project.title}
+            loading="lazy"
+            className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
+          />
+        </Parallax>
+        <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors duration-700 ease-cinema" />
+        <div className="absolute top-4 left-4 label text-paper drop-shadow">
+          {project.n}
+        </div>
+      </div>
+      <div className="mt-5 flex items-end justify-between gap-6">
+        <div>
+          <h3 className="font-display text-2xl md:text-4xl tracking-tight leading-tight">
+            {project.title}
+          </h3>
+          <p className="label text-ash mt-2">{project.tag}</p>
+        </div>
+        <span className="label text-ash shrink-0">{project.year}</span>
+      </div>
+    </a>
+  );
+}
+
+/* ─────────────────────────── PROCESS ─────────────────────────── */
+
+const steps = [
+  {
+    n: "01",
+    title: "Curious creatures.",
+    body: "We start with questions. Lots of them. The story, the people, the quiet wins, the loud problems. Coffee in hand, defences down — the bit most studios skip is where we plant the flag.",
+  },
+  {
+    n: "02",
+    title: "Personality, then pretty.",
+    body: "Card games, quizzes, late-night voice notes. We surface the version of your brand that already exists, then translate it into something a stranger can feel in three seconds.",
+  },
+  {
+    n: "03",
+    title: "Set the mood.",
+    body: "A series of moodboards maps the visual direction — from slightly outside your comfort zone to full ¡Ay caramba! — so we land on a position with conviction, not a compromise.",
+  },
+  {
+    n: "04",
+    title: "One concept, all in.",
+    body: "No three half-baked options dressed up as choice. We commit to a single direction and build it out — typography, voice, motion, the way it answers the phone.",
+  },
+  {
+    n: "05",
+    title: "Refine and package.",
+    body: "Brand bible, asset library, the rules of engagement. So your team, your printer, or some future designer doesn't go rogue and butcher the soul.",
+  },
+];
+
+function Process() {
+  return (
+    <section id="process" className="bg-ink text-paper py-32 md:py-56 px-6 md:px-10 grain">
+      <div className="max-w-[1500px] mx-auto">
+        <div className="grid grid-cols-12 gap-6 md:gap-10 mb-20 md:mb-32">
+          <div className="col-span-12 md:col-span-3">
+            <Reveal>
+              <p className="label text-paper/50">(Process · 03)</p>
+            </Reveal>
+          </div>
+          <div className="col-span-12 md:col-span-9">
+            <Reveal delay={0.1}>
+              <h2 className="font-display text-[12vw] md:text-[8vw] leading-[0.92] tracking-tight">
+                Five scenes.
+                <br />
+                <span className="italic text-coral">No improv.</span>
+              </h2>
+            </Reveal>
+          </div>
+        </div>
+
+        <ol className="divide-y divide-paper/15 border-y border-paper/15">
+          {steps.map((s, i) => (
+            <ProcessRow key={s.n} step={s} index={i} />
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function ProcessRow({ step, index }: { step: (typeof steps)[number]; index: number }) {
+  return (
+    <Reveal delay={index * 0.05}>
+      <li className="group grid grid-cols-12 gap-4 md:gap-10 py-10 md:py-16 cursor-default">
+        <div className="col-span-2 md:col-span-1 label text-paper/50 pt-2">
+          {step.n}
+        </div>
+        <div className="col-span-10 md:col-span-5">
+          <h3 className="font-display text-4xl md:text-7xl tracking-tight leading-[0.95] transition-transform duration-700 ease-cinema group-hover:translate-x-2">
+            {step.title}
+          </h3>
+        </div>
+        <div className="col-span-12 md:col-span-5 md:col-start-8 text-base md:text-lg leading-relaxed text-paper/70 pt-2">
+          {step.body}
+        </div>
+        <div className="hidden md:flex col-span-1 items-start justify-end pt-3 text-paper/50 group-hover:text-coral transition-colors duration-500">
+          <Plus className="w-5 h-5 transition-transform duration-700 ease-cinema group-hover:rotate-90" />
+        </div>
+      </li>
+    </Reveal>
+  );
+}
+
+/* ──────────────── HORIZONTAL SCROLLING SHOWCASE ──────────────── */
+
+function HorizontalShowcase() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66%"]);
+
+  const cards = [
+    { label: "Maison Verre", meta: "Identity, 2025", img: work1 },
+    { label: "Carrenle", meta: "Packaging, 2025", img: work2 },
+    { label: "Blasr Mill", meta: "Stationery, 2024", img: work3 },
+    { label: "Atelier Rouge", meta: "Campaign, 2024", img: work4 },
+    { label: "North & Vine", meta: "Identity, 2024", img: work1 },
+    { label: "Aperture", meta: "Editorial, 2023", img: work3 },
+  ];
+
+  return (
+    <section ref={ref} className="bg-paper relative h-[300vh]">
+      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+        <div className="px-6 md:px-10 pt-24 md:pt-32 pb-10 flex items-end justify-between">
+          <div>
+            <p className="label text-ash mb-4">(Showcase · 04)</p>
+            <h2 className="font-display text-5xl md:text-8xl tracking-tight leading-[0.92]">
+              Drag your eyes <span className="italic text-coral">→</span>
+            </h2>
+          </div>
+          <span className="label text-ash hidden md:block">06 / works</span>
+        </div>
+
+        <motion.div style={{ x }} className="flex gap-6 md:gap-10 px-6 md:px-10 pb-20 will-change-transform">
+          {cards.map((c, i) => (
+            <article
+              key={i}
+              className="shrink-0 w-[80vw] md:w-[42vw] lg:w-[36vw] aspect-[4/5] relative overflow-hidden bg-muted"
+            >
+              <img
+                src={c.img}
+                alt={c.label}
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 bg-gradient-to-t from-ink/70 to-transparent text-paper">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <h3 className="font-display text-3xl md:text-4xl tracking-tight leading-none">
+                      {c.label}
+                    </h3>
+                    <p className="label text-paper/70 mt-2">{c.meta}</p>
                   </div>
+                  <span className="label">0{i + 1}</span>
                 </div>
               </div>
-            ))}
-          </div>
+            </article>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────────── SERVICES ─────────────────────────── */
+
+const services = [
+  {
+    n: "S/01",
+    title: "Brand Strategy",
+    body: "Positioning, messaging architecture, audience mapping. The structural work that decides whether design lands or dies on impact.",
+  },
+  {
+    n: "S/02",
+    title: "Visual Identity",
+    body: "Logos are the tip. Type systems, colour, imagery, motion, packaging — the whole grammar that makes you recognisable in a glance.",
+  },
+  {
+    n: "S/03",
+    title: "Editorial & Print",
+    body: "Books, lookbooks, reports treated like magazines. Pace, hierarchy, weight — content that earns its second read.",
+  },
+  {
+    n: "S/04",
+    title: "Brand Guidelines",
+    body: "A no-nonsense system your team and collaborators can run with. Rules with room to play, not handcuffs.",
+  },
+];
+
+function Services() {
+  return (
+    <section id="services" className="bg-cream text-ink py-32 md:py-48 px-6 md:px-10">
+      <div className="max-w-[1500px] mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
+          <Reveal>
+            <h2 className="font-display text-[14vw] md:text-[10vw] leading-[0.9] tracking-tight">
+              Our<span className="italic text-coral">specialty.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.15} className="md:max-w-sm">
+            <p className="text-base md:text-lg text-ink/70 leading-relaxed">
+              Four disciplines, one studio. We move between them the way a
+              cinematographer moves between lenses — choosing the right one for
+              the scene.
+            </p>
+          </Reveal>
         </div>
-      </section>
 
-      {/* Work */}
-      <section className="py-24 md:py-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="font-serif italic text-5xl md:text-7xl text-cream text-center mb-16">Work</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {[
-              { hue: "var(--peach)", label: "Unlimit" },
-              { hue: "var(--soft-peach)", label: "Verge" },
-              { hue: "var(--cream)", label: "Foil & Co" },
-              { hue: "var(--coral)", label: "Lumen" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="aspect-square rounded-md flex items-end p-6 transition-transform hover:-translate-y-1"
-                style={{ backgroundColor: `color-mix(in oklab, ${item.hue} 100%, transparent)` }}
-              >
-                <span className="font-serif italic text-2xl md:text-3xl text-[color:var(--coral)]">
-                  {item.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Brand Packages */}
-      <section className="bg-[color:var(--soft-peach)] text-[color:var(--card-foreground)] py-24 md:py-32">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="font-serif text-5xl md:text-7xl text-[color:var(--coral)] mb-16 md:mb-24 tracking-tight">
-            BRAND<span className="italic">packages</span>
-          </h2>
-
-          <div className="space-y-20 md:space-y-28">
-            {packages.map((p) => (
-              <div key={p.title} className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-16 items-start border-t border-[color:var(--coral)]/30 pt-12">
-                <h3 className="font-serif italic text-4xl md:text-6xl text-[color:var(--coral)]">
-                  {p.title}
-                </h3>
-                <div>
-                  <div className="space-y-4 text-base md:text-lg leading-relaxed mb-8">
-                    {p.body.map((para, i) => (
-                      <p key={i}>{para}</p>
-                    ))}
-                  </div>
-                  <a
-                    href="#contact"
-                    className="inline-flex items-center gap-2 font-serif italic text-xl md:text-2xl text-[color:var(--coral)] underline underline-offset-8 decoration-1 hover:opacity-70 transition"
-                  >
-                    Let’s Talk →
-                  </a>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-ink/15 border border-ink/15">
+          {services.map((s, i) => (
+            <Reveal key={s.n} delay={i * 0.08}>
+              <article className="bg-cream p-8 md:p-12 lg:p-16 h-full flex flex-col gap-6 group cursor-default">
+                <div className="flex items-start justify-between">
+                  <span className="label text-ink/50">{s.n}</span>
+                  <Plus className="w-5 h-5 text-ink/40 transition-transform duration-700 ease-cinema group-hover:rotate-90 group-hover:text-coral" />
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Our Specialty */}
-      <section className="py-24 md:py-32">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="font-serif text-5xl md:text-7xl text-cream mb-16 md:mb-24 tracking-tight">
-            OUR<span className="italic">specialty</span>
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {specialties.map((s) => (
-              <div
-                key={s.title}
-                className="bg-[color:var(--peach)] text-[color:var(--card-foreground)] rounded-2xl p-8 md:p-10 transition-transform hover:-translate-y-1"
-              >
-                <h3 className="font-serif italic text-3xl md:text-4xl text-[color:var(--coral)] mb-5">
+                <h3 className="font-display text-4xl md:text-6xl tracking-tight leading-[0.95]">
                   {s.title}
                 </h3>
-                <p className="text-base leading-relaxed">{s.body}</p>
-              </div>
-            ))}
-          </div>
+                <p className="text-base md:text-lg text-ink/70 leading-relaxed max-w-md">
+                  {s.body}
+                </p>
+              </article>
+            </Reveal>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* Testimonials */}
-      <section className="bg-[color:var(--cream)] text-[color:var(--card-foreground)] py-24 md:py-32">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="font-serif text-5xl md:text-7xl text-[color:var(--coral)] text-center mb-20">
-            Now we’re <em className="italic">blushing!</em>
+/* ───────────────────────── TESTIMONIALS ───────────────────────── */
+
+const quotes = [
+  {
+    quote:
+      "They translated a vision I could barely articulate into something tangible — name, story, identity, site. The team really know their stuff.",
+    name: "Tracey Soffe",
+    role: "Founder, Trace Consulting",
+  },
+  {
+    quote:
+      "Eighty percent of new referrals now come through Instagram — a channel I was reluctant to even start. Idyll understood the market better than I did.",
+    name: "Olivia Brailsford",
+    role: "Director, Olive Accounting",
+  },
+  {
+    quote:
+      "The quality of the work — and the way they go about it — speaks for itself. From brand to website, they let us bring our vision to fruition.",
+    name: "Marama Nicholas",
+    role: "TVK Water Sports",
+  },
+];
+
+function Testimonials() {
+  return (
+    <section className="bg-paper text-ink py-32 md:py-48 px-6 md:px-10">
+      <div className="max-w-[1500px] mx-auto">
+        <Reveal>
+          <p className="label text-ash mb-8">(Kind words · 05)</p>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <h2 className="font-display text-[14vw] md:text-[8vw] leading-[0.92] tracking-tight max-w-5xl">
+            Now we&apos;re <span className="italic text-coral">blushing.</span>
           </h2>
+        </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t) => (
-              <figure key={t.name} className="flex flex-col">
-                <blockquote className="text-base md:text-[17px] leading-relaxed mb-6">
-                  “{t.quote}”
+        <div className="mt-20 md:mt-32 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
+          {quotes.map((q, i) => (
+            <Reveal key={q.name} delay={i * 0.1}>
+              <figure className="flex flex-col h-full">
+                <span className="font-display text-6xl text-coral leading-none mb-4">“</span>
+                <blockquote className="font-display text-xl md:text-2xl leading-snug tracking-tight text-ink/90">
+                  {q.quote}
                 </blockquote>
-                <figcaption className="mt-auto pt-4 border-t border-[color:var(--coral)]/30">
-                  <div className="font-serif italic text-xl text-[color:var(--coral)]">{t.name}</div>
-                  <div className="text-sm opacity-70">{t.company}</div>
+                <figcaption className="mt-auto pt-10">
+                  <div className="h-px bg-ink/20 mb-4" />
+                  <p className="font-display text-lg">{q.name}</p>
+                  <p className="label text-ash mt-1">{q.role}</p>
                 </figcaption>
               </figure>
-            ))}
-          </div>
+            </Reveal>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* Pricing Guide */}
-      <section id="contact" className="py-24 md:py-32 bg-[color:var(--peach)] text-[color:var(--card-foreground)]">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="font-serif text-5xl md:text-7xl text-[color:var(--coral)] mb-8 tracking-tight">
-            PRICING <span className="italic">guide</span>
-          </h2>
-          <p className="text-base md:text-lg mb-12">
-            We’d much rather make you a coffee and chit chat, but if you’d like an indication on pricing, download our guide below.
-          </p>
+/* ──────────────────────────── CTA ──────────────────────────── */
 
-          <form
-            className="space-y-4 text-left"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <div>
-              <label className="block text-sm mb-2">Full Name *</label>
-              <input
-                required
-                className="w-full bg-transparent border border-[color:var(--coral)]/40 rounded-md px-4 py-3 outline-none focus:border-[color:var(--coral)] transition"
-              />
-            </div>
-            <div>
-              <label className="block text-sm mb-2">Email *</label>
-              <input
-                required
-                type="email"
-                className="w-full bg-transparent border border-[color:var(--coral)]/40 rounded-md px-4 py-3 outline-none focus:border-[color:var(--coral)] transition"
-              />
-            </div>
-            <div>
-              <label className="block text-sm mb-2">Business</label>
-              <input className="w-full bg-transparent border border-[color:var(--coral)]/40 rounded-md px-4 py-3 outline-none focus:border-[color:var(--coral)] transition" />
-            </div>
-            <button
-              type="submit"
-              className="w-full mt-6 bg-[color:var(--coral)] text-[color:var(--cream)] font-serif italic text-xl py-4 rounded-md hover:opacity-90 transition"
-            >
-              Download
-            </button>
-          </form>
+function CTA() {
+  return (
+    <section id="contact" className="bg-coral text-ink py-32 md:py-56 px-6 md:px-10 grain overflow-hidden">
+      <div className="max-w-[1500px] mx-auto relative">
+        <Reveal>
+          <p className="label mb-10">(Let&apos;s talk · 06)</p>
+        </Reveal>
+        <h2 className="font-display text-[16vw] md:text-[14vw] leading-[0.85] tracking-[-0.04em]">
+          <RevealText text="Make" />
+          <br />
+          <span className="italic">
+            <RevealText text="something" delay={0.1} />
+          </span>
+          <br />
+          <RevealText text="quietly loud." delay={0.2} />
+        </h2>
+
+        <div className="mt-16 md:mt-24 flex flex-col md:flex-row md:items-end md:justify-between gap-12">
+          <Reveal>
+            <p className="text-lg md:text-xl max-w-md leading-relaxed">
+              We take on a small handful of projects each quarter. If something
+              here resonated, the next move is a coffee and a conversation.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <Magnetic strength={0.4}>
+              <a
+                href="mailto:hello@idyll.studio"
+                className="inline-flex items-center gap-3 bg-ink text-paper rounded-full pl-8 pr-3 py-3 font-display text-2xl md:text-3xl tracking-tight hover:bg-paper hover:text-ink transition-colors duration-700 ease-cinema"
+              >
+                hello@idyll.studio
+                <span className="bg-coral text-ink rounded-full w-12 h-12 flex items-center justify-center">
+                  <ArrowUpRight className="w-5 h-5" />
+                </span>
+              </a>
+            </Magnetic>
+          </Reveal>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* Footer marquee */}
-      <footer className="bg-[color:var(--coral)] py-10 overflow-hidden border-t border-[color:var(--cream)]/20">
-        <div className="marquee gap-16 whitespace-nowrap">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <span
-              key={i}
-              className="font-serif italic text-4xl md:text-6xl text-[color:var(--cream)]"
-            >
-              idyllic<span className="not-italic">.</span> <span className="opacity-50 mx-4">★</span>
+/* ──────────────────────────── FOOTER ──────────────────────────── */
+
+function Footer() {
+  const items = ["Idyll Studio", "Auckland · Aotearoa", "Est. MMXVI", "Available Q3 / 2026"];
+  const row = [...items, ...items, ...items];
+  return (
+    <footer className="bg-ink text-paper">
+      <div className="py-8 border-y border-paper/10 overflow-hidden">
+        <div className="marquee marquee-slow gap-16 whitespace-nowrap">
+          {row.map((t, i) => (
+            <span key={i} className="font-display italic text-3xl md:text-5xl">
+              {t} <span className="not-italic mx-6 text-coral">✦</span>
             </span>
           ))}
         </div>
-        <div className="text-center text-cream/80 text-sm mt-8">
-          Wham bam, we won’t send you spam. © {new Date().getFullYear()} idyllic.
+      </div>
+
+      <div className="px-6 md:px-10 py-20 md:py-24 max-w-[1500px] mx-auto">
+        <div className="grid grid-cols-12 gap-8">
+          <div className="col-span-12 md:col-span-6">
+            <h3 className="font-display text-5xl md:text-7xl tracking-tight leading-[0.95] max-w-xl">
+              We answer<br />
+              <span className="italic text-coral">in 24 hours.</span>
+            </h3>
+          </div>
+          <div className="col-span-6 md:col-span-3">
+            <p className="label text-paper/50 mb-6">Studio</p>
+            <ul className="space-y-3 text-base">
+              <li><a href="#work" className="underline-anim">Work</a></li>
+              <li><a href="#process" className="underline-anim">Process</a></li>
+              <li><a href="#services" className="underline-anim">Services</a></li>
+              <li><a href="#contact" className="underline-anim">Contact</a></li>
+            </ul>
+          </div>
+          <div className="col-span-6 md:col-span-3">
+            <p className="label text-paper/50 mb-6">Elsewhere</p>
+            <ul className="space-y-3 text-base">
+              <li><a href="#" className="underline-anim">Instagram</a></li>
+              <li><a href="#" className="underline-anim">Are.na</a></li>
+              <li><a href="#" className="underline-anim">LinkedIn</a></li>
+              <li><a href="#" className="underline-anim">Read.cv</a></li>
+            </ul>
+          </div>
         </div>
-      </footer>
-    </div>
+
+        <div className="mt-20 pt-8 border-t border-paper/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 label text-paper/50">
+          <span>© {new Date().getFullYear()} Idyll Studio · All rights observed</span>
+          <span>Designed and built in-house</span>
+        </div>
+      </div>
+    </footer>
   );
 }
