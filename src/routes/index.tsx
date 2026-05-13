@@ -105,10 +105,10 @@ function Hero() {
             <RevealText text="A studio" />
           </span>
           <span className="block text-[18vw] md:text-[15vw] leading-[0.85] italic text-coral">
-            <RevealText text="for the" delay={0.2} />
+            <RevealText text="that links" delay={0.2} />
           </span>
           <span className="block text-[18vw] md:text-[15vw] leading-[0.85]">
-            <RevealText text="quietly bold." delay={0.4} />
+            <RevealText text="story & system." delay={0.4} />
           </span>
         </h1>
       </motion.div>
