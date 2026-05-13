@@ -745,7 +745,7 @@ function Field({
 /* ──────────────────────────── FOOTER ──────────────────────────── */
 
 function Footer() {
-  const items = ["Idyll Studio", "Auckland · Aotearoa", "Est. MMXVI", "Available Q3 / 2026"];
+  const items = ["Lynque Studio", "Johannesburg · ZA", "Est. MMXVI", "Available Q3 / 2026"];
   const row = [...items, ...items, ...items];
   return (
     <footer className="bg-ink text-paper">
@@ -773,6 +773,7 @@ function Footer() {
               <li><a href="#work" className="underline-anim">Work</a></li>
               <li><a href="#process" className="underline-anim">Process</a></li>
               <li><a href="#services" className="underline-anim">Services</a></li>
+              <li><Link to="/projects" className="underline-anim">All projects</Link></li>
               <li><a href="#contact" className="underline-anim">Contact</a></li>
             </ul>
           </div>
@@ -788,7 +789,7 @@ function Footer() {
         </div>
 
         <div className="mt-20 pt-8 border-t border-paper/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 label text-paper/50">
-          <span>© {new Date().getFullYear()} Idyll Studio · All rights observed</span>
+          <span>© {new Date().getFullYear()} Lynque Studio · Where vision meets its most expressive digital form.</span>
           <span>Designed and built in-house</span>
         </div>
       </div>
