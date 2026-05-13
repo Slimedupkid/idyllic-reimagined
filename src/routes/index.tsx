@@ -1,12 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowUpRight, Plus } from "lucide-react";
-import { useRef } from "react";
+import { ArrowUpRight, Plus, Check } from "lucide-react";
+import { useRef, useState } from "react";
+import { z } from "zod";
 
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Reveal, RevealText } from "@/components/Reveal";
 import { Magnetic } from "@/components/Magnetic";
 import { Parallax } from "@/components/Parallax";
+import { allProjects } from "@/data/projects";
 
 import hero1 from "@/assets/hero-1.jpg";
 import work1 from "@/assets/work-1.jpg";
@@ -45,13 +47,14 @@ function Nav() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
       <div className="flex items-center justify-between px-6 md:px-10 py-6 text-paper">
-        <a href="/" className="font-display text-2xl tracking-tight">
-          Idyll<span className="text-coral">.</span>
-        </a>
+        <Link to="/" className="font-display text-2xl tracking-tight">
+          Lynque<span className="text-coral">.</span>
+        </Link>
         <nav className="hidden md:flex items-center gap-10 label">
           <a href="#work" className="underline-anim">Work</a>
           <a href="#process" className="underline-anim">Process</a>
           <a href="#services" className="underline-anim">Services</a>
+          <Link to="/projects" className="underline-anim">Projects</Link>
           <a href="#contact" className="underline-anim">Contact</a>
         </nav>
         <Magnetic className="hidden md:block">
@@ -87,9 +90,9 @@ function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
       >
-        <span>Est. MMXVI · Auckland</span>
-        <span className="hidden md:inline">Independent Studio</span>
-        <span className="text-right">N° 04 / Branding</span>
+        <span>Est. MMXVI · Johannesburg</span>
+        <span className="hidden md:inline">Multi-disciplinary studio</span>
+        <span className="text-right">N° 04 / Lynque</span>
       </motion.div>
 
       {/* Headline */}
@@ -102,10 +105,10 @@ function Hero() {
             <RevealText text="A studio" />
           </span>
           <span className="block text-[18vw] md:text-[15vw] leading-[0.85] italic text-coral">
-            <RevealText text="for the" delay={0.2} />
+            <RevealText text="that links" delay={0.2} />
           </span>
           <span className="block text-[18vw] md:text-[15vw] leading-[0.85]">
-            <RevealText text="quietly bold." delay={0.4} />
+            <RevealText text="story & system." delay={0.4} />
           </span>
         </h1>
       </motion.div>
@@ -146,10 +149,10 @@ function Marquee() {
   const items = [
     "Brand Strategy",
     "Visual Identity",
+    "Immersive Web",
     "Editorial Design",
+    "Growth Automation",
     "Art Direction",
-    "Brand Messaging",
-    "Motion",
   ];
   const row = [...items, ...items];
   return (
@@ -237,9 +240,9 @@ function Work() {
             </Reveal>
           </div>
           <Reveal delay={0.2} className="hidden md:block">
-            <a href="#" className="label inline-flex items-center gap-2 underline-anim">
-              All projects (24) <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
+            <Link to="/projects" className="label inline-flex items-center gap-2 underline-anim">
+              All projects ({String(allProjects.length).padStart(2, "0")}) <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
           </Reveal>
         </div>
 
@@ -560,7 +563,44 @@ function Testimonials() {
 
 /* ──────────────────────────── CTA ──────────────────────────── */
 
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Your name, please.").max(100),
+  email: z.string().trim().email("That email looks off.").max(255),
+  company: z.string().trim().max(120).optional().or(z.literal("")),
+  budget: z.string().trim().max(60).optional().or(z.literal("")),
+  message: z.string().trim().min(10, "A little more context?").max(2000),
+});
+
 function CTA() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrors({});
+    const fd = new FormData(e.currentTarget);
+    const data = {
+      name: String(fd.get("name") ?? ""),
+      email: String(fd.get("email") ?? ""),
+      company: String(fd.get("company") ?? ""),
+      budget: String(fd.get("budget") ?? ""),
+      message: String(fd.get("message") ?? ""),
+    };
+    const parsed = contactSchema.safeParse(data);
+    if (!parsed.success) {
+      const errs: Record<string, string> = {};
+      for (const issue of parsed.error.issues) {
+        errs[issue.path.join(".")] = issue.message;
+      }
+      setErrors(errs);
+      return;
+    }
+    setStatus("sending");
+    // Simulated send — wire to a server fn / mailer when ready.
+    setTimeout(() => setStatus("sent"), 800);
+    (e.currentTarget as HTMLFormElement).reset();
+  };
+
   return (
     <section id="contact" className="bg-coral text-ink py-32 md:py-56 px-6 md:px-10 grain overflow-hidden">
       <div className="max-w-[1500px] mx-auto relative">
@@ -577,26 +617,97 @@ function CTA() {
           <RevealText text="quietly loud." delay={0.2} />
         </h2>
 
-        <div className="mt-16 md:mt-24 flex flex-col md:flex-row md:items-end md:justify-between gap-12">
-          <Reveal>
-            <p className="text-lg md:text-xl max-w-md leading-relaxed">
-              We take on a small handful of projects each quarter. If something
-              here resonated, the next move is a coffee and a conversation.
+        <div className="mt-20 md:mt-28 grid grid-cols-12 gap-8 md:gap-16">
+          <Reveal className="col-span-12 md:col-span-4">
+            <p className="text-lg md:text-xl leading-relaxed">
+              We take on a small handful of projects each quarter. Tell us
+              what you&apos;re building — we&apos;ll write back within 24 hours
+              with thoughts, questions, or a coffee invitation.
             </p>
+            <div className="mt-10 space-y-2 label">
+              <p className="text-ink/70">Direct</p>
+              <a href="mailto:hello@lynque.studio" className="font-display italic text-2xl block">
+                hello@lynque.studio
+              </a>
+              <p className="text-ink/70 mt-6">Studio</p>
+              <p className="font-display text-xl">Johannesburg, ZA</p>
+            </div>
           </Reveal>
 
-          <Reveal delay={0.15}>
-            <Magnetic strength={0.4}>
-              <a
-                href="mailto:hello@idyll.studio"
-                className="inline-flex items-center gap-3 bg-ink text-paper rounded-full pl-8 pr-3 py-3 font-display text-2xl md:text-3xl tracking-tight hover:bg-paper hover:text-ink transition-colors duration-700 ease-cinema"
-              >
-                hello@idyll.studio
-                <span className="bg-coral text-ink rounded-full w-12 h-12 flex items-center justify-center">
-                  <ArrowUpRight className="w-5 h-5" />
+          <Reveal delay={0.15} className="col-span-12 md:col-span-8">
+            {status === "sent" ? (
+              <div className="border border-ink/30 bg-paper/40 backdrop-blur-sm p-10 md:p-14 flex flex-col items-start gap-6">
+                <span className="w-14 h-14 rounded-full bg-ink text-coral flex items-center justify-center">
+                  <Check className="w-6 h-6" />
                 </span>
-              </a>
-            </Magnetic>
+                <h3 className="font-display text-4xl md:text-6xl tracking-tight leading-[0.95]">
+                  Got it. <span className="italic">Talk soon.</span>
+                </h3>
+                <p className="text-lg text-ink/80 max-w-md">
+                  Your note is in our inbox. Expect a reply within one
+                  business day — sometimes faster, never automated.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 md:grid-cols-2 gap-px bg-ink/30 border border-ink/30">
+                <Field
+                  label="Name"
+                  name="name"
+                  placeholder="Tatenda Moyo"
+                  error={errors.name}
+                />
+                <Field
+                  label="Email"
+                  name="email"
+                  type="email"
+                  placeholder="you@studio.co"
+                  error={errors.email}
+                />
+                <Field
+                  label="Company (optional)"
+                  name="company"
+                  placeholder="Helios Solar"
+                  error={errors.company}
+                />
+                <Field
+                  label="Budget (optional)"
+                  name="budget"
+                  placeholder="R 80k — R 250k"
+                  error={errors.budget}
+                />
+                <div className="bg-coral md:col-span-2 p-5 md:p-7">
+                  <label className="label text-ink/70 block mb-3">
+                    The project
+                  </label>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    placeholder="Tell us what you're building, who it's for, and what would make it feel like a win."
+                    className="w-full bg-transparent outline-none font-display text-2xl md:text-3xl tracking-tight leading-snug placeholder:text-ink/40 resize-none"
+                  />
+                  {errors.message && (
+                    <p className="label text-ink mt-2">{errors.message}</p>
+                  )}
+                </div>
+                <div className="bg-coral md:col-span-2 p-5 md:p-7 flex items-center justify-between gap-4">
+                  <p className="label text-ink/70 max-w-xs">
+                    By sending you agree we&apos;ll only use this to reply.
+                  </p>
+                  <Magnetic strength={0.3}>
+                    <button
+                      type="submit"
+                      disabled={status === "sending"}
+                      className="inline-flex items-center gap-3 bg-ink text-paper rounded-full pl-7 pr-3 py-3 font-display text-xl md:text-2xl tracking-tight hover:bg-paper hover:text-ink transition-colors duration-700 ease-cinema disabled:opacity-60"
+                    >
+                      {status === "sending" ? "Sending…" : "Send it"}
+                      <span className="bg-coral text-ink rounded-full w-11 h-11 flex items-center justify-center">
+                        <ArrowUpRight className="w-5 h-5" />
+                      </span>
+                    </button>
+                  </Magnetic>
+                </div>
+              </form>
+            )}
           </Reveal>
         </div>
       </div>
@@ -604,10 +715,37 @@ function CTA() {
   );
 }
 
+function Field({
+  label,
+  name,
+  type = "text",
+  placeholder,
+  error,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  placeholder?: string;
+  error?: string;
+}) {
+  return (
+    <div className="bg-coral p-5 md:p-7">
+      <label className="label text-ink/70 block mb-3">{label}</label>
+      <input
+        name={name}
+        type={type}
+        placeholder={placeholder}
+        className="w-full bg-transparent outline-none font-display text-2xl md:text-3xl tracking-tight placeholder:text-ink/40 border-b border-ink/30 focus:border-ink pb-2 transition-colors"
+      />
+      {error && <p className="label text-ink mt-2">{error}</p>}
+    </div>
+  );
+}
+
 /* ──────────────────────────── FOOTER ──────────────────────────── */
 
 function Footer() {
-  const items = ["Idyll Studio", "Auckland · Aotearoa", "Est. MMXVI", "Available Q3 / 2026"];
+  const items = ["Lynque Studio", "Johannesburg · ZA", "Est. MMXVI", "Available Q3 / 2026"];
   const row = [...items, ...items, ...items];
   return (
     <footer className="bg-ink text-paper">
@@ -635,6 +773,7 @@ function Footer() {
               <li><a href="#work" className="underline-anim">Work</a></li>
               <li><a href="#process" className="underline-anim">Process</a></li>
               <li><a href="#services" className="underline-anim">Services</a></li>
+              <li><Link to="/projects" className="underline-anim">All projects</Link></li>
               <li><a href="#contact" className="underline-anim">Contact</a></li>
             </ul>
           </div>
@@ -650,7 +789,7 @@ function Footer() {
         </div>
 
         <div className="mt-20 pt-8 border-t border-paper/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 label text-paper/50">
-          <span>© {new Date().getFullYear()} Idyll Studio · All rights observed</span>
+          <span>© {new Date().getFullYear()} Lynque Studio · Where vision meets its most expressive digital form.</span>
           <span>Designed and built in-house</span>
         </div>
       </div>
