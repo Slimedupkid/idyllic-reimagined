@@ -90,9 +90,9 @@ function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
       >
-        <span>Est. MMXVI · Auckland</span>
-        <span className="hidden md:inline">Independent Studio</span>
-        <span className="text-right">N° 04 / Branding</span>
+        <span>Est. MMXVI · Johannesburg</span>
+        <span className="hidden md:inline">Multi-disciplinary studio</span>
+        <span className="text-right">N° 04 / Lynque</span>
       </motion.div>
 
       {/* Headline */}
