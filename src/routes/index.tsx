@@ -149,10 +149,10 @@ function Marquee() {
   const items = [
     "Brand Strategy",
     "Visual Identity",
+    "Immersive Web",
     "Editorial Design",
+    "Growth Automation",
     "Art Direction",
-    "Brand Messaging",
-    "Motion",
   ];
   const row = [...items, ...items];
   return (
