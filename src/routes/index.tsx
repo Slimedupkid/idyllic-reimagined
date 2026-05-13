@@ -1,12 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowUpRight, Plus } from "lucide-react";
-import { useRef } from "react";
+import { ArrowUpRight, Plus, Check } from "lucide-react";
+import { useRef, useState } from "react";
+import { z } from "zod";
 
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Reveal, RevealText } from "@/components/Reveal";
 import { Magnetic } from "@/components/Magnetic";
 import { Parallax } from "@/components/Parallax";
+import { allProjects } from "@/data/projects";
 
 import hero1 from "@/assets/hero-1.jpg";
 import work1 from "@/assets/work-1.jpg";
