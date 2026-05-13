@@ -47,13 +47,14 @@ function Nav() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
       <div className="flex items-center justify-between px-6 md:px-10 py-6 text-paper">
-        <a href="/" className="font-display text-2xl tracking-tight">
-          Idyll<span className="text-coral">.</span>
-        </a>
+        <Link to="/" className="font-display text-2xl tracking-tight">
+          Lynque<span className="text-coral">.</span>
+        </Link>
         <nav className="hidden md:flex items-center gap-10 label">
           <a href="#work" className="underline-anim">Work</a>
           <a href="#process" className="underline-anim">Process</a>
           <a href="#services" className="underline-anim">Services</a>
+          <Link to="/projects" className="underline-anim">Projects</Link>
           <a href="#contact" className="underline-anim">Contact</a>
         </nav>
         <Magnetic className="hidden md:block">
