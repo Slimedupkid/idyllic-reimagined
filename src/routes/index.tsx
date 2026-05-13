@@ -240,9 +240,9 @@ function Work() {
             </Reveal>
           </div>
           <Reveal delay={0.2} className="hidden md:block">
-            <a href="#" className="label inline-flex items-center gap-2 underline-anim">
-              All projects (24) <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
+            <Link to="/projects" className="label inline-flex items-center gap-2 underline-anim">
+              All projects ({String(allProjects.length).padStart(2, "0")}) <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
           </Reveal>
         </div>
 
