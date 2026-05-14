@@ -11,6 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DemoNorthVineRouteImport } from './routes/demo.north-vine'
+import { Route as DemoMarulaGroveRouteImport } from './routes/demo.marula-grove'
+import { Route as DemoHeliosRouteImport } from './routes/demo.helios'
+import { Route as DemoFerroRouteImport } from './routes/demo.ferro'
+import { Route as DemoEmberRitualsRouteImport } from './routes/demo.ember-rituals'
+import { Route as DemoAtelierNoxRouteImport } from './routes/demo.atelier-nox'
 import { Route as ApiPublicContactRouteImport } from './routes/api/public/contact'
 
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -23,6 +29,36 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DemoNorthVineRoute = DemoNorthVineRouteImport.update({
+  id: '/demo/north-vine',
+  path: '/demo/north-vine',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoMarulaGroveRoute = DemoMarulaGroveRouteImport.update({
+  id: '/demo/marula-grove',
+  path: '/demo/marula-grove',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoHeliosRoute = DemoHeliosRouteImport.update({
+  id: '/demo/helios',
+  path: '/demo/helios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoFerroRoute = DemoFerroRouteImport.update({
+  id: '/demo/ferro',
+  path: '/demo/ferro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoEmberRitualsRoute = DemoEmberRitualsRouteImport.update({
+  id: '/demo/ember-rituals',
+  path: '/demo/ember-rituals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoAtelierNoxRoute = DemoAtelierNoxRouteImport.update({
+  id: '/demo/atelier-nox',
+  path: '/demo/atelier-nox',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicContactRoute = ApiPublicContactRouteImport.update({
   id: '/api/public/contact',
   path: '/api/public/contact',
@@ -32,30 +68,82 @@ const ApiPublicContactRoute = ApiPublicContactRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/projects': typeof ProjectsRoute
+  '/demo/atelier-nox': typeof DemoAtelierNoxRoute
+  '/demo/ember-rituals': typeof DemoEmberRitualsRoute
+  '/demo/ferro': typeof DemoFerroRoute
+  '/demo/helios': typeof DemoHeliosRoute
+  '/demo/marula-grove': typeof DemoMarulaGroveRoute
+  '/demo/north-vine': typeof DemoNorthVineRoute
   '/api/public/contact': typeof ApiPublicContactRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/projects': typeof ProjectsRoute
+  '/demo/atelier-nox': typeof DemoAtelierNoxRoute
+  '/demo/ember-rituals': typeof DemoEmberRitualsRoute
+  '/demo/ferro': typeof DemoFerroRoute
+  '/demo/helios': typeof DemoHeliosRoute
+  '/demo/marula-grove': typeof DemoMarulaGroveRoute
+  '/demo/north-vine': typeof DemoNorthVineRoute
   '/api/public/contact': typeof ApiPublicContactRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/projects': typeof ProjectsRoute
+  '/demo/atelier-nox': typeof DemoAtelierNoxRoute
+  '/demo/ember-rituals': typeof DemoEmberRitualsRoute
+  '/demo/ferro': typeof DemoFerroRoute
+  '/demo/helios': typeof DemoHeliosRoute
+  '/demo/marula-grove': typeof DemoMarulaGroveRoute
+  '/demo/north-vine': typeof DemoNorthVineRoute
   '/api/public/contact': typeof ApiPublicContactRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/projects' | '/api/public/contact'
+  fullPaths:
+    | '/'
+    | '/projects'
+    | '/demo/atelier-nox'
+    | '/demo/ember-rituals'
+    | '/demo/ferro'
+    | '/demo/helios'
+    | '/demo/marula-grove'
+    | '/demo/north-vine'
+    | '/api/public/contact'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/projects' | '/api/public/contact'
-  id: '__root__' | '/' | '/projects' | '/api/public/contact'
+  to:
+    | '/'
+    | '/projects'
+    | '/demo/atelier-nox'
+    | '/demo/ember-rituals'
+    | '/demo/ferro'
+    | '/demo/helios'
+    | '/demo/marula-grove'
+    | '/demo/north-vine'
+    | '/api/public/contact'
+  id:
+    | '__root__'
+    | '/'
+    | '/projects'
+    | '/demo/atelier-nox'
+    | '/demo/ember-rituals'
+    | '/demo/ferro'
+    | '/demo/helios'
+    | '/demo/marula-grove'
+    | '/demo/north-vine'
+    | '/api/public/contact'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProjectsRoute: typeof ProjectsRoute
+  DemoAtelierNoxRoute: typeof DemoAtelierNoxRoute
+  DemoEmberRitualsRoute: typeof DemoEmberRitualsRoute
+  DemoFerroRoute: typeof DemoFerroRoute
+  DemoHeliosRoute: typeof DemoHeliosRoute
+  DemoMarulaGroveRoute: typeof DemoMarulaGroveRoute
+  DemoNorthVineRoute: typeof DemoNorthVineRoute
   ApiPublicContactRoute: typeof ApiPublicContactRoute
 }
 
@@ -75,6 +163,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/demo/north-vine': {
+      id: '/demo/north-vine'
+      path: '/demo/north-vine'
+      fullPath: '/demo/north-vine'
+      preLoaderRoute: typeof DemoNorthVineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/marula-grove': {
+      id: '/demo/marula-grove'
+      path: '/demo/marula-grove'
+      fullPath: '/demo/marula-grove'
+      preLoaderRoute: typeof DemoMarulaGroveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/helios': {
+      id: '/demo/helios'
+      path: '/demo/helios'
+      fullPath: '/demo/helios'
+      preLoaderRoute: typeof DemoHeliosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/ferro': {
+      id: '/demo/ferro'
+      path: '/demo/ferro'
+      fullPath: '/demo/ferro'
+      preLoaderRoute: typeof DemoFerroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/ember-rituals': {
+      id: '/demo/ember-rituals'
+      path: '/demo/ember-rituals'
+      fullPath: '/demo/ember-rituals'
+      preLoaderRoute: typeof DemoEmberRitualsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/atelier-nox': {
+      id: '/demo/atelier-nox'
+      path: '/demo/atelier-nox'
+      fullPath: '/demo/atelier-nox'
+      preLoaderRoute: typeof DemoAtelierNoxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/contact': {
       id: '/api/public/contact'
       path: '/api/public/contact'
@@ -88,6 +218,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProjectsRoute: ProjectsRoute,
+  DemoAtelierNoxRoute: DemoAtelierNoxRoute,
+  DemoEmberRitualsRoute: DemoEmberRitualsRoute,
+  DemoFerroRoute: DemoFerroRoute,
+  DemoHeliosRoute: DemoHeliosRoute,
+  DemoMarulaGroveRoute: DemoMarulaGroveRoute,
+  DemoNorthVineRoute: DemoNorthVineRoute,
   ApiPublicContactRoute: ApiPublicContactRoute,
 }
 export const routeTree = rootRouteImport
