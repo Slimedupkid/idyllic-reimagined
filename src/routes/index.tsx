@@ -15,6 +15,7 @@ import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
 import work4 from "@/assets/work-4.jpg";
+import ownerJosh from "@/assets/owner-josh.jpg";
 
 export const Route = createFileRoute("/")({
   component: Page,
@@ -29,6 +30,8 @@ function Page() {
         <Hero />
         <Marquee />
         <Manifesto />
+        <About />
+        <Owner />
         <Work />
         <Process />
         <HorizontalShowcase />
@@ -52,6 +55,7 @@ function Nav() {
         </Link>
         <nav className="hidden md:flex items-center gap-10 label">
           <a href="#work" className="underline-anim">Work</a>
+          <a href="#about" className="underline-anim">About</a>
           <a href="#process" className="underline-anim">Process</a>
           <a href="#services" className="underline-anim">Services</a>
           <Link to="/projects" className="underline-anim">Projects</Link>
