@@ -82,17 +82,26 @@ export function ContactOverlay() {
 
     setStatus("sending");
     try {
-      const res = await fetch("/api/public/contact", {
+      const res = await fetch("https://formsubmit.co/ajax/info@lynque.co.za", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
-          ...parsed.data,
-          project_type: active?.label ?? "",
+          name: parsed.data.name,
+          email: parsed.data.email,
+          budget: parsed.data.budget || "—",
+          project_type: active?.label ?? "—",
+          message: parsed.data.message,
+          _subject: `New Lynque brief — ${active?.label ?? "Enquiry"} (${parsed.data.name})`,
+          _template: "table",
+          _captcha: "false",
         }),
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        throw new Error(j.error ?? "Send failed");
+        throw new Error(j.message ?? "Send failed");
       }
       setStatus("sent");
     } catch (err) {
