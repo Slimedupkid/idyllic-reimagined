@@ -217,14 +217,16 @@ function Manifesto() {
 
 /* ──────────────────────────── WORK ──────────────────────────── */
 
-const projects = [
-  { n: "01", title: "Maison Verre", tag: "Identity · Print", year: "2025", img: work1, span: "md:col-span-7 md:row-span-2", ratio: "aspect-[4/5]" },
-  { n: "02", title: "Carrenle", tag: "Packaging · Art Direction", year: "2025", img: work2, span: "md:col-span-5", ratio: "aspect-[4/5]" },
-  { n: "03", title: "Blasr Mill", tag: "Identity · Stationery", year: "2024", img: work3, span: "md:col-span-5", ratio: "aspect-[4/5]" },
-  { n: "04", title: "Atelier Rouge", tag: "Campaign · Editorial", year: "2024", img: work4, span: "md:col-span-12", ratio: "aspect-[16/9]" },
+const featuredSpans = [
+  "md:col-span-7 md:row-span-2",
+  "md:col-span-5",
+  "md:col-span-5",
+  "md:col-span-12",
 ];
+const featuredRatios = ["aspect-[4/5]", "aspect-[4/5]", "aspect-[4/5]", "aspect-[16/9]"];
 
 function Work() {
+  const featured = allProjects.slice(0, 4);
   return (
     <section id="work" className="bg-paper text-ink py-24 md:py-40 px-6 md:px-10">
       <div className="max-w-[1500px] mx-auto">
@@ -247,13 +249,13 @@ function Work() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-          {projects.map((p, i) => (
+          {featured.map((p, i) => (
             <Reveal
-              key={p.n}
+              key={p.slug}
               delay={i * 0.08}
-              className={`group ${p.span ?? "md:col-span-6"}`}
+              className={`group ${featuredSpans[i]}`}
             >
-              <ProjectCard project={p} />
+              <ProjectCard project={p} ratio={featuredRatios[i]} index={i + 1} />
             </Reveal>
           ))}
         </div>
@@ -262,10 +264,18 @@ function Work() {
   );
 }
 
-function ProjectCard({ project }: { project: (typeof projects)[number] }) {
-  return (
-    <a href="#" className="block group">
-      <div className={`relative overflow-hidden bg-muted ${project.ratio}`}>
+function ProjectCard({
+  project,
+  ratio,
+  index,
+}: {
+  project: (typeof allProjects)[number];
+  ratio: string;
+  index: number;
+}) {
+  const Inner = (
+    <div className="block group">
+      <div className={`relative overflow-hidden bg-muted ${ratio}`}>
         <Parallax offset={40} className="absolute inset-0">
           <img
             src={project.img}
@@ -276,8 +286,13 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
         </Parallax>
         <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors duration-700 ease-cinema" />
         <div className="absolute top-4 left-4 label text-paper drop-shadow">
-          {project.n}
+          {String(index).padStart(2, "0")}
         </div>
+        {project.href && (
+          <div className="absolute top-4 right-4 label text-paper drop-shadow inline-flex items-center gap-1">
+            Live <ArrowUpRight className="w-3 h-3" />
+          </div>
+        )}
       </div>
       <div className="mt-5 flex items-end justify-between gap-6">
         <div>
@@ -288,8 +303,9 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
         </div>
         <span className="label text-ash shrink-0">{project.year}</span>
       </div>
-    </a>
+    </div>
   );
+  return project.href ? <Link to={project.href}>{Inner}</Link> : <a href="#work">{Inner}</a>;
 }
 
 /* ─────────────────────────── PROCESS ─────────────────────────── */
