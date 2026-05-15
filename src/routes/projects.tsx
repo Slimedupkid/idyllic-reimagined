@@ -131,42 +131,50 @@ function ProjectsPage() {
                   span === "md:col-span-12" ? "aspect-[16/9]" : "aspect-[4/5]";
                 return (
                   <Reveal key={p.slug} delay={(i % 4) * 0.06} className={span}>
-                    <article className="group">
-                      <div
-                        className={`relative overflow-hidden bg-muted ${ratio}`}
-                      >
-                        <Parallax offset={40} className="absolute inset-0">
-                          <img
-                            src={p.img}
-                            alt={p.title}
-                            loading="lazy"
-                            className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
-                          />
-                        </Parallax>
-                        <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/25 transition-colors duration-700 ease-cinema" />
-                        <div className="absolute top-4 left-4 label text-paper drop-shadow">
-                          {p.n}
-                        </div>
-                        <div className="absolute top-4 right-4 label text-paper/90 drop-shadow">
-                          {p.category}
-                        </div>
-                      </div>
-                      <div className="mt-6 flex items-end justify-between gap-6">
-                        <div>
-                          <h2 className="font-display text-3xl md:text-5xl tracking-tight leading-[0.95]">
-                            {p.title}
-                            <span className="italic text-coral">.</span>
-                          </h2>
-                          <p className="label text-ash mt-2">
-                            {p.client} · {p.tag}
+                    {(() => {
+                      const Inner = (
+                        <article className="group">
+                          <div className={`relative overflow-hidden bg-muted ${ratio}`}>
+                            <Parallax offset={40} className="absolute inset-0">
+                              <img
+                                src={p.img}
+                                alt={p.title}
+                                loading="lazy"
+                                className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
+                              />
+                            </Parallax>
+                            <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/25 transition-colors duration-700 ease-cinema" />
+                            <div className="absolute top-4 left-4 label text-paper drop-shadow">
+                              {p.n}
+                            </div>
+                            <div className="absolute top-4 right-4 label text-paper/90 drop-shadow inline-flex items-center gap-2">
+                              {p.category}
+                              {p.href && <span>· Live ↗</span>}
+                            </div>
+                          </div>
+                          <div className="mt-6 flex items-end justify-between gap-6">
+                            <div>
+                              <h2 className="font-display text-3xl md:text-5xl tracking-tight leading-[0.95]">
+                                {p.title}
+                                <span className="italic text-coral">.</span>
+                              </h2>
+                              <p className="label text-ash mt-2">
+                                {p.client} · {p.tag}
+                              </p>
+                            </div>
+                            <span className="label text-ash shrink-0">{p.year}</span>
+                          </div>
+                          <p className="mt-4 text-base md:text-lg text-ink/70 leading-relaxed max-w-2xl">
+                            {p.description}
                           </p>
-                        </div>
-                        <span className="label text-ash shrink-0">{p.year}</span>
-                      </div>
-                      <p className="mt-4 text-base md:text-lg text-ink/70 leading-relaxed max-w-2xl">
-                        {p.description}
-                      </p>
-                    </article>
+                        </article>
+                      );
+                      return p.href ? (
+                        <Link to={p.href} className="block">{Inner}</Link>
+                      ) : (
+                        Inner
+                      );
+                    })()}
                   </Reveal>
                 );
               })}

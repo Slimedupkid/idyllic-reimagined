@@ -15,6 +15,7 @@ import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
 import work4 from "@/assets/work-4.jpg";
+import ownerJosh from "@/assets/owner-josh.jpg";
 
 export const Route = createFileRoute("/")({
   component: Page,
@@ -29,6 +30,8 @@ function Page() {
         <Hero />
         <Marquee />
         <Manifesto />
+        <About />
+        <Owner />
         <Work />
         <Process />
         <HorizontalShowcase />
@@ -52,6 +55,7 @@ function Nav() {
         </Link>
         <nav className="hidden md:flex items-center gap-10 label">
           <a href="#work" className="underline-anim">Work</a>
+          <a href="#about" className="underline-anim">About</a>
           <a href="#process" className="underline-anim">Process</a>
           <a href="#services" className="underline-anim">Services</a>
           <Link to="/projects" className="underline-anim">Projects</Link>
@@ -215,16 +219,142 @@ function Manifesto() {
   );
 }
 
+/* ──────────────────────────── ABOUT ──────────────────────────── */
+
+function About() {
+  return (
+    <section id="about" className="bg-ink text-paper py-32 md:py-56 px-6 md:px-10 grain border-t border-paper/10">
+      <div className="grid grid-cols-12 gap-6 md:gap-10 max-w-[1500px] mx-auto">
+        <div className="col-span-12 md:col-span-3">
+          <Reveal>
+            <p className="label text-paper/50">(About Lynque · 02)</p>
+          </Reveal>
+        </div>
+        <div className="col-span-12 md:col-span-9">
+          <h2 className="font-display text-[10vw] md:text-[6.5vw] leading-[0.95] tracking-tight">
+            <RevealText text="people remember" />
+            <br />
+            <span className="italic text-coral">
+              <RevealText text="how something feels" delay={0.1} />
+            </span>
+            <br />
+            <RevealText text="before what it says." delay={0.2} />
+          </h2>
+
+          <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 max-w-5xl">
+            <Reveal delay={0.1}>
+              <p className="text-lg md:text-xl leading-relaxed text-paper/80">
+                Lynque is a web design and digital branding studio built around
+                one idea: people remember how something feels before they
+                remember what it says. We create websites and digital
+                experiences for brands that want clarity, personality, and
+                presence — not recycled templates, not corporate noise.
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-lg md:text-xl leading-relaxed text-paper/80">
+                Every project starts with the brand itself — the story, the
+                tone, the reason it exists — then translates that into design
+                that feels honest, modern and considered. Built lean, intent
+                first, with restraint where it counts.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-paper/15 pt-12">
+            {[
+              { k: "Joburg", v: "Studio" },
+              { k: "Web · Brand", v: "Practice" },
+              { k: "Lean team", v: "Structure" },
+              { k: "Story-first", v: "Method" },
+            ].map((b) => (
+              <Reveal key={b.k}>
+                <div>
+                  <p className="font-display text-2xl md:text-3xl tracking-tight">
+                    {b.k}
+                  </p>
+                  <p className="label text-paper/50 mt-2">{b.v}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ──────────────────────── OWNER ──────────────────────── */
+
+function Owner() {
+  return (
+    <section className="bg-paper text-ink py-32 md:py-48 px-6 md:px-10">
+      <div className="grid grid-cols-12 gap-6 md:gap-10 max-w-[1500px] mx-auto items-center">
+        <div className="col-span-12 md:col-span-5">
+          <Reveal>
+            <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+              <Parallax offset={50} className="absolute inset-0">
+                <img
+                  src={ownerJosh}
+                  alt="Founder of Lynque"
+                  className="w-full h-[120%] object-cover"
+                  loading="lazy"
+                />
+              </Parallax>
+              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-paper label drop-shadow">
+                <span>Founder</span>
+                <span>Johannesburg</span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+        <div className="col-span-12 md:col-span-7 md:pl-10">
+          <Reveal>
+            <p className="label text-ash mb-6">(Behind the studio · 03)</p>
+          </Reveal>
+          <h2 className="font-display text-[12vw] md:text-[6vw] leading-[0.95] tracking-tight">
+            Built by someone who
+            <br />
+            <span className="italic text-coral">
+              actually cares.
+            </span>
+          </h2>
+          <div className="mt-12 space-y-6 max-w-2xl text-lg md:text-xl leading-relaxed text-ink/80">
+            <Reveal delay={0.1}>
+              <p>
+                Lynque is led by a designer with a background spanning brand
+                strategy, web design, and visual communication. Every project
+                is treated like a story — with its own tone, emotion, and
+                identity.
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p>
+                That mindset shows up in the work: clean design, meaningful
+                detail, and websites that feel personal instead of
+                manufactured. No account managers, no template factories — just
+                a small team obsessed with getting it right.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ──────────────────────────── WORK ──────────────────────────── */
 
-const projects = [
-  { n: "01", title: "Maison Verre", tag: "Identity · Print", year: "2025", img: work1, span: "md:col-span-7 md:row-span-2", ratio: "aspect-[4/5]" },
-  { n: "02", title: "Carrenle", tag: "Packaging · Art Direction", year: "2025", img: work2, span: "md:col-span-5", ratio: "aspect-[4/5]" },
-  { n: "03", title: "Blasr Mill", tag: "Identity · Stationery", year: "2024", img: work3, span: "md:col-span-5", ratio: "aspect-[4/5]" },
-  { n: "04", title: "Atelier Rouge", tag: "Campaign · Editorial", year: "2024", img: work4, span: "md:col-span-12", ratio: "aspect-[16/9]" },
+const featuredSpans = [
+  "md:col-span-7 md:row-span-2",
+  "md:col-span-5",
+  "md:col-span-5",
+  "md:col-span-12",
 ];
+const featuredRatios = ["aspect-[4/5]", "aspect-[4/5]", "aspect-[4/5]", "aspect-[16/9]"];
 
 function Work() {
+  const featured = allProjects.slice(0, 4);
   return (
     <section id="work" className="bg-paper text-ink py-24 md:py-40 px-6 md:px-10">
       <div className="max-w-[1500px] mx-auto">
@@ -247,13 +377,13 @@ function Work() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-          {projects.map((p, i) => (
+          {featured.map((p, i) => (
             <Reveal
-              key={p.n}
+              key={p.slug}
               delay={i * 0.08}
-              className={`group ${p.span ?? "md:col-span-6"}`}
+              className={`group ${featuredSpans[i]}`}
             >
-              <ProjectCard project={p} />
+              <ProjectCard project={p} ratio={featuredRatios[i]} index={i + 1} />
             </Reveal>
           ))}
         </div>
@@ -262,10 +392,18 @@ function Work() {
   );
 }
 
-function ProjectCard({ project }: { project: (typeof projects)[number] }) {
-  return (
-    <a href="#" className="block group">
-      <div className={`relative overflow-hidden bg-muted ${project.ratio}`}>
+function ProjectCard({
+  project,
+  ratio,
+  index,
+}: {
+  project: (typeof allProjects)[number];
+  ratio: string;
+  index: number;
+}) {
+  const Inner = (
+    <div className="block group">
+      <div className={`relative overflow-hidden bg-muted ${ratio}`}>
         <Parallax offset={40} className="absolute inset-0">
           <img
             src={project.img}
@@ -276,8 +414,13 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
         </Parallax>
         <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors duration-700 ease-cinema" />
         <div className="absolute top-4 left-4 label text-paper drop-shadow">
-          {project.n}
+          {String(index).padStart(2, "0")}
         </div>
+        {project.href && (
+          <div className="absolute top-4 right-4 label text-paper drop-shadow inline-flex items-center gap-1">
+            Live <ArrowUpRight className="w-3 h-3" />
+          </div>
+        )}
       </div>
       <div className="mt-5 flex items-end justify-between gap-6">
         <div>
@@ -288,8 +431,9 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
         </div>
         <span className="label text-ash shrink-0">{project.year}</span>
       </div>
-    </a>
+    </div>
   );
+  return project.href ? <Link to={project.href}>{Inner}</Link> : <a href="#work">{Inner}</a>;
 }
 
 /* ─────────────────────────── PROCESS ─────────────────────────── */
