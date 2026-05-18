@@ -401,15 +401,16 @@ function ProjectCard({
   ratio: string;
   index: number;
 }) {
+  const isLive = project.isLiveSite;
   const Inner = (
     <div className="block group">
       <div className={`relative overflow-hidden bg-muted ${ratio}`}>
-        <Parallax offset={40} className="absolute inset-0">
+        <Parallax offset={isLive ? 0 : 40} className="absolute inset-0">
           <img
             src={project.img}
             alt={project.title}
             loading="lazy"
-            className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
+            className={`w-full ${isLive ? "h-full object-cover object-top" : "h-[120%] object-cover"} transition-transform duration-[1400ms] ease-cinema group-hover:scale-105`}
           />
         </Parallax>
         <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors duration-700 ease-cinema" />
