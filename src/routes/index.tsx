@@ -863,9 +863,13 @@ function CTA() {
                   )}
                 </div>
                 <div className="bg-coral md:col-span-2 p-5 md:p-7 flex items-center justify-between gap-4">
-                  <p className="label text-ink/70 max-w-xs">
-                    By sending you agree we&apos;ll only use this to reply.
-                  </p>
+                  <div className="label text-ink/70 max-w-xs">
+                    {errorMsg ? (
+                      <span className="text-ink font-display italic">{errorMsg}</span>
+                    ) : (
+                      <p>By sending you agree we&apos;ll only use this to reply.</p>
+                    )}
+                  </div>
                   <Magnetic strength={0.3}>
                     <button
                       type="submit"
