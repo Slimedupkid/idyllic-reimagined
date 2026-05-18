@@ -1,5 +1,3 @@
-import work1 from "@/assets/work-1.jpg";
-import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
 import work4 from "@/assets/work-4.jpg";
 import hero1 from "@/assets/hero-1.jpg";
@@ -11,6 +9,13 @@ import demoEmber from "@/assets/demo-ember.jpg";
 import demoFerro from "@/assets/demo-ferro.jpg";
 import workSabolt from "@/assets/work-sabolt.png";
 import workMulticlean from "@/assets/work-multiclean.png";
+import workMagma from "@/assets/work-magma.png";
+import workAmw from "@/assets/work-amw.png";
+import workDasgrune from "@/assets/work-dasgrune.png";
+import workRoddy from "@/assets/work-roddy.png";
+import workZesty from "@/assets/work-zesty.png";
+import workOpenday from "@/assets/work-openday.png";
+import workVaayu from "@/assets/work-vaayu.png";
 
 export type Project = {
   slug: string;
@@ -26,6 +31,9 @@ export type Project = {
   href?: string;
   /** External URL to a live, shipped client project. */
   externalHref?: string;
+  /** True when `img` is a real website screenshot — used to switch image
+   *  framing (crop from the top of the page instead of the middle). */
+  isLiveSite?: boolean;
 };
 
 export const allProjects: Project[] = [
@@ -41,6 +49,7 @@ export const allProjects: Project[] = [
     description:
       "A clean, trade-ready marketing site for a South African industrial fasteners and tools supplier — built to convert site managers and procurement teams without the corporate stiffness.",
     externalHref: "https://saboltandtools.netlify.app/",
+    isLiveSite: true,
   },
   {
     slug: "multi-clean-services",
@@ -54,6 +63,105 @@ export const allProjects: Project[] = [
     description:
       "A warm, modern residential and commercial cleaning site — friendly green palette, soft cards, and a quote-driven layout that turns curious visitors into booked jobs.",
     externalHref: "https://quiet-basbousa-c4770a.netlify.app/",
+    isLiveSite: true,
+  },
+  {
+    slug: "magma",
+    n: "00",
+    title: "Magma",
+    client: "Magma · Real Estate Web3",
+    tag: "Web · Product · Live",
+    category: "Web",
+    year: "2025",
+    img: workMagma,
+    description:
+      "An electric-blue marketing site for a Web3 real-estate platform — bold display type, a cinematic 3D hero, and a layout that turns a niche technical product into a story you actually want to read.",
+    externalHref: "https://friendly-mochi-7f467e.netlify.app/",
+    isLiveSite: true,
+  },
+  {
+    slug: "amw-soon",
+    n: "00",
+    title: "AMW — Soon",
+    client: "AMW Editorial",
+    tag: "Editorial · Web · Live",
+    category: "Editorial",
+    year: "2025",
+    img: workAmw,
+    description:
+      "A split-screen editorial site for a photography collective. Hand-set headlines, a calm warm palette, and an unmistakably print-inspired rhythm.",
+    externalHref: "https://eloquent-daifuku-2137df.netlify.app/",
+    isLiveSite: true,
+  },
+  {
+    slug: "das-grune",
+    n: "00",
+    title: "Das Grüne",
+    client: "Das Grüne Agency",
+    tag: "Brand · Web · Live",
+    category: "Web",
+    year: "2025",
+    img: workDasgrune,
+    description:
+      "An unapologetically loud agency site — neon green, brutalist type, scrolling marquee, and an embedded showreel. Built to feel less like a website and more like a statement.",
+    externalHref: "https://effortless-wisp-e86ba5.netlify.app/",
+    isLiveSite: true,
+  },
+  {
+    slug: "london-alley",
+    n: "00",
+    title: "London Alley",
+    client: "London Alley Productions",
+    tag: "Web · Carousel · Live",
+    category: "Web",
+    year: "2025",
+    img: workRoddy,
+    description:
+      "A full-screen, edge-to-edge carousel site for a music video production house — every project gets one immersive frame, no compromises on imagery.",
+    externalHref: "https://shimmering-otter-d9bf78.netlify.app/",
+    isLiveSite: true,
+  },
+  {
+    slug: "moodboard-studio",
+    n: "00",
+    title: "Moodboard",
+    client: "Moodboard Studio",
+    tag: "Art Direction · Web · Live",
+    category: "Editorial",
+    year: "2024",
+    img: workZesty,
+    description:
+      "A free-floating, collage-style landing page — scattered objects, soft photography, and a feed that behaves more like a Pinterest board than a website.",
+    externalHref: "https://zesty-torrone-20fa55.netlify.app/",
+    isLiveSite: true,
+  },
+  {
+    slug: "open-day",
+    n: "00",
+    title: "Open Day",
+    client: "Open Day · Berika Spacejam 92",
+    tag: "Event · Web · Live",
+    category: "Editorial",
+    year: "2024",
+    img: workOpenday,
+    description:
+      "An editorial event poster, on the web. Heavy serif, a Renaissance portrait, kinetic marquee — built for a one-off open studio day with collector-edition energy.",
+    externalHref: "https://dazzling-cuchufli-0dd4f6.netlify.app/",
+    isLiveSite: true,
+  },
+  {
+    slug: "vaayu",
+    n: "00",
+    title: "Vaayu",
+    client: "Vaayu",
+    tag: "Brand · Web · Live",
+    category: "Branding",
+    year: "2024",
+    img: workVaayu,
+    description:
+      "A quiet, olive-green storefront for a slow-living wellness brand — minimal navigation, soft circular product cards, and copy that breathes.",
+    externalHref: "https://lively-begonia-77a026.netlify.app/",
+    isLiveSite: true,
   },
   {
     slug: "helios-solar",
@@ -134,18 +242,6 @@ export const allProjects: Project[] = [
     href: "/demo/ember-rituals",
   },
   {
-    slug: "kweli-fintech",
-    n: "07",
-    title: "Kweli",
-    client: "Kweli Capital",
-    tag: "Brand · Product UI",
-    category: "Web",
-    year: "2026",
-    img: work2,
-    description:
-      "Rebranded a Pan-African fintech from corporate-blue boredom into a confident editorial system rooted in trust and motion.",
-  },
-  {
     slug: "rumour-magazine",
     n: "08",
     title: "Rumour",
@@ -170,18 +266,6 @@ export const allProjects: Project[] = [
       "A custom lead-gen system stitched into a marketing site. Forms, CRM, follow-ups — automated end-to-end.",
   },
   {
-    slug: "sable-studio",
-    n: "10",
-    title: "Sable",
-    client: "Sable Photography",
-    tag: "Portfolio · Web",
-    category: "Web",
-    year: "2024",
-    img: work4,
-    description:
-      "A pinned, scroll-driven portfolio for a fashion photographer. Quiet UI, loud images.",
-  },
-  {
     slug: "mont-blanc-review",
     n: "11",
     title: "Mont Blanc Review",
@@ -193,16 +277,9 @@ export const allProjects: Project[] = [
     description:
       "A long-form review platform built around typography, sequencing, and the quiet pleasure of a well-set paragraph.",
   },
-  {
-    slug: "harbour-collective",
-    n: "12",
-    title: "Harbour",
-    client: "Harbour Creative Collective",
-    tag: "Identity",
-    category: "Branding",
-    year: "2023",
-    img: work1,
-    description:
-      "An umbrella identity for a collective of seven independent makers — flexible enough to bend, structured enough to hold.",
-  },
 ];
+
+// Re-number the `n` field sequentially so the archive reads cleanly.
+allProjects.forEach((p, i) => {
+  p.n = String(i + 1).padStart(2, "0");
+});
