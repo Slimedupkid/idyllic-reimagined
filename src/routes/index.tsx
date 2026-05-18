@@ -722,11 +722,14 @@ const contactSchema = z.object({
 function CTA() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors({});
-    const fd = new FormData(e.currentTarget);
+    setErrorMsg("");
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const data = {
       name: String(fd.get("name") ?? ""),
       email: String(fd.get("email") ?? ""),
@@ -744,9 +747,31 @@ function CTA() {
       return;
     }
     setStatus("sending");
-    // Simulated send — wire to a server fn / mailer when ready.
-    setTimeout(() => setStatus("sent"), 800);
-    (e.currentTarget as HTMLFormElement).reset();
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/info@lynque.co.za", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          ...parsed.data,
+          _subject: `New Lynque enquiry — ${parsed.data.name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.message ?? "Send failed");
+      }
+      setStatus("sent");
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+      setStatus("error");
+    }
   };
 
   return (
