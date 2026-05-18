@@ -401,15 +401,16 @@ function ProjectCard({
   ratio: string;
   index: number;
 }) {
+  const isLive = project.isLiveSite;
   const Inner = (
     <div className="block group">
       <div className={`relative overflow-hidden bg-muted ${ratio}`}>
-        <Parallax offset={40} className="absolute inset-0">
+        <Parallax offset={isLive ? 0 : 40} className="absolute inset-0">
           <img
             src={project.img}
             alt={project.title}
             loading="lazy"
-            className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
+            className={`w-full ${isLive ? "h-full object-cover object-top" : "h-[120%] object-cover"} transition-transform duration-[1400ms] ease-cinema group-hover:scale-105`}
           />
         </Parallax>
         <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors duration-700 ease-cinema" />
@@ -721,11 +722,14 @@ const contactSchema = z.object({
 function CTA() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors({});
-    const fd = new FormData(e.currentTarget);
+    setErrorMsg("");
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const data = {
       name: String(fd.get("name") ?? ""),
       email: String(fd.get("email") ?? ""),
@@ -743,9 +747,31 @@ function CTA() {
       return;
     }
     setStatus("sending");
-    // Simulated send — wire to a server fn / mailer when ready.
-    setTimeout(() => setStatus("sent"), 800);
-    (e.currentTarget as HTMLFormElement).reset();
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/info@lynque.co.za", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          ...parsed.data,
+          _subject: `New Lynque enquiry — ${parsed.data.name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        throw new Error(j.message ?? "Send failed");
+      }
+      setStatus("sent");
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+      setStatus("error");
+    }
   };
 
   return (
@@ -773,8 +799,8 @@ function CTA() {
             </p>
             <div className="mt-10 space-y-2 label">
               <p className="text-ink/70">Direct</p>
-              <a href="mailto:hello@lynque.studio" className="font-display italic text-2xl block">
-                hello@lynque.studio
+              <a href="mailto:info@lynque.co.za" className="font-display italic text-2xl block">
+                info@lynque.co.za
               </a>
               <p className="text-ink/70 mt-6">Studio</p>
               <p className="font-display text-xl">Johannesburg, ZA</p>
@@ -837,9 +863,13 @@ function CTA() {
                   )}
                 </div>
                 <div className="bg-coral md:col-span-2 p-5 md:p-7 flex items-center justify-between gap-4">
-                  <p className="label text-ink/70 max-w-xs">
-                    By sending you agree we&apos;ll only use this to reply.
-                  </p>
+                  <div className="label text-ink/70 max-w-xs">
+                    {errorMsg ? (
+                      <span className="text-ink font-display italic">{errorMsg}</span>
+                    ) : (
+                      <p>By sending you agree we&apos;ll only use this to reply.</p>
+                    )}
+                  </div>
                   <Magnetic strength={0.3}>
                     <button
                       type="submit"
