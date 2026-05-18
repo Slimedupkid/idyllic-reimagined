@@ -799,8 +799,8 @@ function CTA() {
             </p>
             <div className="mt-10 space-y-2 label">
               <p className="text-ink/70">Direct</p>
-              <a href="mailto:hello@lynque.studio" className="font-display italic text-2xl block">
-                hello@lynque.studio
+              <a href="mailto:info@lynque.co.za" className="font-display italic text-2xl block">
+                info@lynque.co.za
               </a>
               <p className="text-ink/70 mt-6">Studio</p>
               <p className="font-display text-xl">Johannesburg, ZA</p>
