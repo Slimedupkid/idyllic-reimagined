@@ -135,12 +135,12 @@ function ProjectsPage() {
                       const Inner = (
                         <article className="group">
                           <div className={`relative overflow-hidden bg-muted ${ratio}`}>
-                            <Parallax offset={40} className="absolute inset-0">
+                            <Parallax offset={p.isLiveSite ? 0 : 40} className="absolute inset-0">
                               <img
                                 src={p.img}
                                 alt={p.title}
                                 loading="lazy"
-                                className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
+                                className={`w-full ${p.isLiveSite ? "h-full object-cover object-top" : "h-[120%] object-cover"} transition-transform duration-[1400ms] ease-cinema group-hover:scale-105`}
                               />
                             </Parallax>
                             <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/25 transition-colors duration-700 ease-cinema" />
