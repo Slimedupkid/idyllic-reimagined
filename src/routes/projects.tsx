@@ -149,7 +149,7 @@ function ProjectsPage() {
                             </div>
                             <div className="absolute top-4 right-4 label text-paper/90 drop-shadow inline-flex items-center gap-2">
                               {p.category}
-                              {p.href && <span>· Live ↗</span>}
+                              {(p.href || p.externalHref) && <span>· Live ↗</span>}
                             </div>
                           </div>
                           <div className="mt-6 flex items-end justify-between gap-6">
@@ -169,6 +169,13 @@ function ProjectsPage() {
                           </p>
                         </article>
                       );
+                      if (p.externalHref) {
+                        return (
+                          <a href={p.externalHref} target="_blank" rel="noopener noreferrer" className="block">
+                            {Inner}
+                          </a>
+                        );
+                      }
                       return p.href ? (
                         <Link to={p.href} className="block">{Inner}</Link>
                       ) : (

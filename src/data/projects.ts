@@ -9,6 +9,8 @@ import demoNox from "@/assets/demo-nox.jpg";
 import demoVine from "@/assets/demo-vine.jpg";
 import demoEmber from "@/assets/demo-ember.jpg";
 import demoFerro from "@/assets/demo-ferro.jpg";
+import workSabolt from "@/assets/work-sabolt.png";
+import workMulticlean from "@/assets/work-multiclean.png";
 
 export type Project = {
   slug: string;
@@ -22,9 +24,37 @@ export type Project = {
   description: string;
   /** Path to a live demo route inside the app, if any. */
   href?: string;
+  /** External URL to a live, shipped client project. */
+  externalHref?: string;
 };
 
 export const allProjects: Project[] = [
+  {
+    slug: "sa-bolt-tools",
+    n: "00",
+    title: "SA Bolt & Tools",
+    client: "SA Bolt & Tools",
+    tag: "Identity · Web · Live",
+    category: "Web",
+    year: "2025",
+    img: workSabolt,
+    description:
+      "A clean, trade-ready marketing site for a South African industrial fasteners and tools supplier — built to convert site managers and procurement teams without the corporate stiffness.",
+    externalHref: "https://saboltandtools.netlify.app/",
+  },
+  {
+    slug: "multi-clean-services",
+    n: "00",
+    title: "Multi-Clean Services",
+    client: "Multi-Clean Services",
+    tag: "Brand · Web · Live",
+    category: "Web",
+    year: "2025",
+    img: workMulticlean,
+    description:
+      "A warm, modern residential and commercial cleaning site — friendly green palette, soft cards, and a quote-driven layout that turns curious visitors into booked jobs.",
+    externalHref: "https://quiet-basbousa-c4770a.netlify.app/",
+  },
   {
     slug: "helios-solar",
     n: "01",

@@ -416,7 +416,7 @@ function ProjectCard({
         <div className="absolute top-4 left-4 label text-paper drop-shadow">
           {String(index).padStart(2, "0")}
         </div>
-        {project.href && (
+        {(project.href || project.externalHref) && (
           <div className="absolute top-4 right-4 label text-paper drop-shadow inline-flex items-center gap-1">
             Live <ArrowUpRight className="w-3 h-3" />
           </div>
@@ -433,6 +433,9 @@ function ProjectCard({
       </div>
     </div>
   );
+  if (project.externalHref) {
+    return <a href={project.externalHref} target="_blank" rel="noopener noreferrer">{Inner}</a>;
+  }
   return project.href ? <Link to={project.href}>{Inner}</Link> : <a href="#work">{Inner}</a>;
 }
 
