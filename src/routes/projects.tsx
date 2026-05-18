@@ -169,6 +169,13 @@ function ProjectsPage() {
                           </p>
                         </article>
                       );
+                      if (p.externalHref) {
+                        return (
+                          <a href={p.externalHref} target="_blank" rel="noopener noreferrer" className="block">
+                            {Inner}
+                          </a>
+                        );
+                      }
                       return p.href ? (
                         <Link to={p.href} className="block">{Inner}</Link>
                       ) : (
