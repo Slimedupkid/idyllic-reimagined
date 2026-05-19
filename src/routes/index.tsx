@@ -8,6 +8,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { Reveal, RevealText } from "@/components/Reveal";
 import { Magnetic } from "@/components/Magnetic";
 import { Parallax } from "@/components/Parallax";
+import { SiteFrame } from "@/components/SiteFrame";
 import { allProjects } from "@/data/projects";
 
 import hero1 from "@/assets/hero-1.jpg";
