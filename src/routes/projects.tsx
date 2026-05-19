@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Reveal, RevealText } from "@/components/Reveal";
 import { Parallax } from "@/components/Parallax";
+import { SiteFrame } from "@/components/SiteFrame";
 import { allProjects } from "@/data/projects";
 
 export const Route = createFileRoute("/projects")({
