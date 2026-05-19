@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Reveal, RevealText } from "@/components/Reveal";
 import { Parallax } from "@/components/Parallax";
+import { SiteFrame } from "@/components/SiteFrame";
 import { allProjects } from "@/data/projects";
 
 export const Route = createFileRoute("/projects")({
@@ -135,19 +136,23 @@ function ProjectsPage() {
                       const Inner = (
                         <article className="group">
                           <div className={`relative overflow-hidden bg-muted ${ratio}`}>
-                            <Parallax offset={p.isLiveSite ? 0 : 40} className="absolute inset-0">
-                              <img
-                                src={p.img}
-                                alt={p.title}
-                                loading="lazy"
-                                className={`w-full ${p.isLiveSite ? "h-full object-cover object-top" : "h-[120%] object-cover"} transition-transform duration-[1400ms] ease-cinema group-hover:scale-105`}
-                              />
-                            </Parallax>
-                            <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/25 transition-colors duration-700 ease-cinema" />
-                            <div className="absolute top-4 left-4 label text-paper drop-shadow">
+                            {p.isLiveSite ? (
+                              <SiteFrame src={p.img} alt={p.title} url={p.externalHref} />
+                            ) : (
+                              <Parallax offset={40} className="absolute inset-0">
+                                <img
+                                  src={p.img}
+                                  alt={p.title}
+                                  loading="lazy"
+                                  className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
+                                />
+                              </Parallax>
+                            )}
+                            <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/10 transition-colors duration-700 ease-cinema pointer-events-none" />
+                            <div className="absolute top-4 left-4 label text-ink/70 z-20">
                               {p.n}
                             </div>
-                            <div className="absolute top-4 right-4 label text-paper/90 drop-shadow inline-flex items-center gap-2">
+                            <div className="absolute top-4 right-4 label text-ink/70 z-20 inline-flex items-center gap-2">
                               {p.category}
                               {(p.href || p.externalHref) && <span>· Live ↗</span>}
                             </div>
