@@ -753,28 +753,29 @@ function CTA() {
     }
     setStatus("sending");
     try {
-      const res = await fetch("https://formsubmit.co/ajax/info@lynque.co.za", {
+      const res = await fetch("/api/public/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
-          ...parsed.data,
-          _subject: `New Lynque enquiry — ${parsed.data.name}`,
-          _template: "table",
-          _captcha: "false",
+          name: parsed.data.name,
+          email: parsed.data.email,
+          project_type: parsed.data.company || "Homepage enquiry",
+          budget: parsed.data.budget || "—",
+          message: parsed.data.message,
         }),
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        throw new Error(j.message ?? "Send failed");
+        throw new Error(j.error ?? "Send failed");
       }
       setStatus("sent");
       form.reset();
     } catch (err) {
       console.error(err);
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong.");
+      setErrorMsg("Couldn’t send right now. Please email info@lynque.co.za directly.");
       setStatus("error");
     }
   };
