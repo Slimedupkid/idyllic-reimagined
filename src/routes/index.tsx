@@ -405,20 +405,24 @@ function ProjectCard({
   const Inner = (
     <div className="block group">
       <div className={`relative overflow-hidden bg-muted ${ratio}`}>
-        <Parallax offset={isLive ? 0 : 40} className="absolute inset-0">
-          <img
-            src={project.img}
-            alt={project.title}
-            loading="lazy"
-            className={`w-full ${isLive ? "h-full object-cover object-top" : "h-[120%] object-cover"} transition-transform duration-[1400ms] ease-cinema group-hover:scale-105`}
-          />
-        </Parallax>
-        <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/20 transition-colors duration-700 ease-cinema" />
-        <div className="absolute top-4 left-4 label text-paper drop-shadow">
+        {isLive ? (
+          <SiteFrame src={project.img} alt={project.title} url={project.externalHref} />
+        ) : (
+          <Parallax offset={40} className="absolute inset-0">
+            <img
+              src={project.img}
+              alt={project.title}
+              loading="lazy"
+              className="w-full h-[120%] object-cover transition-transform duration-[1400ms] ease-cinema group-hover:scale-105"
+            />
+          </Parallax>
+        )}
+        <div className="absolute inset-0 bg-ink/0 group-hover:bg-ink/10 transition-colors duration-700 ease-cinema pointer-events-none" />
+        <div className="absolute top-4 left-4 label text-ink/70 z-20">
           {String(index).padStart(2, "0")}
         </div>
         {(project.href || project.externalHref) && (
-          <div className="absolute top-4 right-4 label text-paper drop-shadow inline-flex items-center gap-1">
+          <div className="absolute top-4 right-4 label text-ink/70 inline-flex items-center gap-1 z-20">
             Live <ArrowUpRight className="w-3 h-3" />
           </div>
         )}
