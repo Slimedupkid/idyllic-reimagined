@@ -189,13 +189,13 @@ function Manifesto() {
         </div>
         <div className="col-span-12 md:col-span-9">
           <h2 className="font-display text-[10vw] md:text-[7vw] leading-[0.95] tracking-tight">
-            <RevealText text="We don't make" />
+            <RevealText text="We don't just" />
             <br />
             <span className="italic text-coral">
-              <RevealText text="logos. We make" delay={0.1} />
+              <RevealText text="design websites." delay={0.1} />
             </span>
             <br />
-            <RevealText text="long love affairs." delay={0.2} />
+            <RevealText text="We build brands online." delay={0.2} />
           </h2>
 
           <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 max-w-4xl">
